@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!--
+  ~ Copyright (c) 2013 Kaiserpfalz EDV-Service, Nicol und Roland Lichti
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        ">
+    <changeSet id="Common 1.0" author="klenkes">
+        <comment>Create common tables for all modules.</comment>
+
+        <sql>create schema if not exists RPGSERVER</sql>
+
+        <createTable schemaName="RPGSERVER" tableName="TENANTS" remarks="The tenants">
+            <column name="identity_" type="CHAR(36)">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="TENANTS_PK"/>
+            </column>
+            <column name="version_" type="BIGINT" defaultValue="0">
+                <constraints nullable="false" unique="false"/>
+            </column>
+
+            <column name="name_" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="shortname_" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable schemaName="RPGSERVER" tableName="TAGS" remarks="Tags for marking other datasets">
+            <column name="type_" type="VARCHAR(20)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="identity_" type="VARCHAR(36)">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="TAGS_PK"/>
+            </column>
+            <column name="tag_" type="VARCHAR(50)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <createIndex schemaName="RPGSERVER" tableName="TAGS" unique="true" indexName="TAGS_UK">
+            <column name="type_"/>
+            <column name="tag_"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="database 1.0" author="klenkes">
+        <tagDatabase tag="version-1-0"/>
+    </changeSet>
+</databaseChangeLog>
