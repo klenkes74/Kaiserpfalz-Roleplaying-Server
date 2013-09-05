@@ -1,0 +1,9 @@
+This server aims to be a replacement for the "Legend of the Green
+Dragon" gaming system programmed in PHP.
+
+It will consists of a central server that may be used by different
+frontends. The frontends may be one roleplaying world or a federated
+system of different worlds which allow the transfer of a player to
+another server.
+
+The server will be licensed unter the Apache Licence 2.0.
